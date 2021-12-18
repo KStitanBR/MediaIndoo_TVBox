@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xtc="http://xamarin.com/schemas/2020/toolkit"
+             BackgroundColor="Black"
+             xmlns:Behaviors="clr-namespace:MediaIndoo_TVBox.Behaviors"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:convert="clr-namespace:MediaIndoo_TVBox.Converters"
+             x:Name="this"
+             x:Class="MediaIndoo_TVBox.Views.MediaPlayerPage">
+
+    <ContentPage.Resources>
+        <convert:VideoSourceConverter x:Key="ConvertVideo"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,50" ColumnDefinitions="*">
+
+            <Grid RowDefinitions="*" 
+                  >
+                <CarouselView x:Name="carouselviewvideos"
+                      Grid.Row="0"
+                      PositionChanged="CarouselViewVideos_PositionChanged"  
+                      CurrentItemChanged="OnCurrentItemChanged"
+                      BackgroundColor="Black"
+                      Grid.Column="0"
+                      Margin="0,0,0,0" ItemsSource="{Binding caminhovideos}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                                <xtc:MediaElement x:Name="video" 
+                                      MediaEnded="Video_MediaEnded"
+                                      BackgroundColor="Black"
+                                      IsLooping="False"
+                                      AutoPlay="True"
+                                      Aspect="AspectFit"
+                                      HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                                      Source="{Binding .}"
+                                      ShowsPlaybackControls="False"/>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <!--<CarouselView x:Name="carouselviewvideos" 
+                              Grid.Row="0"
+                              PositionChanged="CarouselViewVideos_PositionChanged"  
+                      CurrentItemChanged="OnCurrentItemChanged" HorizontalOptions="FillAndExpand" 
+                VerticalOptions="FillAndExpand" ItemsSource="{Binding caminhovideos}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="Black" Margin="-50,0" Padding="0,-30">
+                            
+                        <xtc:MediaElement x:Name="video" MediaEnded="Video_MediaEnded" BackgroundColor="Black" IsLooping="False"
+                                           Margin="0,20"
+                                           Aspect="AspectFit" 
+                                              Source="{Binding .}" ShowsPlaybackControls="False"/>
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>-->
+        </Grid>
+            <ScrollView
+  Grid.Row="1"
+  HeightRequest="45"
+  HorizontalOptions="FillAndExpand"
+  HorizontalScrollBarVisibility="Never"
+            AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                 AbsoluteLayout.LayoutBounds="0, 1,1,28"
+  IsEnabled="{OnPlatform Android=False}"
+  Orientation="Horizontal">
+                <StackLayout Padding="0" Orientation="Horizontal" Spacing="0">
+                    <StackLayout.Behaviors>
+                        <Behaviors:MarqueeBehavior PageWidth="{Binding Path=Width, Source={x:Reference  this }}" />
+                    </StackLayout.Behaviors>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BackgroundColor="Transparent"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="this"
+             xmlns:lib="clr-namespace:MediaIndoo_TVBox.Views.Lib"
+             x:Class="MediaIndoo_TVBox.Views.MainPage"
+             Title="{Binding Title}">
+
+    <Grid ColumnDefinitions="1*,2*,1*"  BackgroundColor="LightGray" Opacity="0.8"  >
+        <Frame BackgroundColor="DarkBlue" >
+        </Frame>
+        <Frame Grid.Column="1"  Margin="20">
+            <CollectionView ItemsSource="{Binding Players}" Margin="0"   >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10" Margin="0">
+                            <Frame BackgroundColor="WhiteSmoke" Padding="0">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference this},
+                                        Path=BindingContext.PlayerCommand}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <Grid ColumnDefinitions="*,30" >
+                                    <Label FontSize="22" VerticalOptions="CenterAndExpand">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Player :  " TextColor="Black"/>
+                                                <Span Text="{Binding Nome}" TextColor="DarkBlue"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Frame  Grid.Column="1"
+                                            HorizontalOptions="EndAndExpand" 
+                                            VerticalOptions="EndAndExpand"
+                                            CornerRadius="0"  
+                                            BackgroundColor="{Binding Path=BackgroundColor, Source={x:Reference entry}}">
+                                        <Entry x:Name="entry" Text="{Binding Codigo}"  Margin="0" VerticalOptions="FillAndExpand"
+                                               HorizontalOptions="FillAndExpand" 
+                                               IsVisible="false"  TextColor="Transparent">
+                                            <Entry.Triggers>
+                                                <EventTrigger Event="TextChanged">
+                                                    <lib:UltimoAcessoTrigger />
+                                                </EventTrigger>
+                                            </Entry.Triggers>
+                                        </Entry>
+                                    </Frame>
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Frame>
+        <Frame BackgroundColor="DarkBlue" Grid.Column="2">
+        </Frame>
+    </Grid>
+
+</ContentPage>
+
+
+<!--<Frame HorizontalOptions="Center" BorderColor="DarkSlateGray"  WidthRequest="300" Margin="40" Padding="1" VerticalOptions="FillAndExpand">
+  
+</Frame>-->
